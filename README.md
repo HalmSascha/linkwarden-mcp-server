@@ -13,6 +13,23 @@ A Model Context Protocol (MCP) server that provides AI assistants with programma
 - **Read-Only Mode**: Optional safety mode for production environments
 - **Flexible Configuration**: Support for command-line flags, environment variables, and config files
 
+## Demo
+
+### Claude Code
+
+#### Available Tools
+
+![tools-in-claude-code](assets/tools_in_claude_code.png)
+
+#### Few Example Usage
+
+Save link:
+
+![save-link-in-claude-code](assets/save_link_in_claude_code.png)
+
+Search Link:
+![search-link-in-claude-code](assets/search_link_in_claude_code.png)
+
 ## Installation
 
 ### Prerequisites
