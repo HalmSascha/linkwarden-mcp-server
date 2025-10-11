@@ -48,8 +48,6 @@ jobs:
             type=semver,pattern={{major}}
             # Tag with full version including 'v' prefix (e.g., v1.0.0)
             type=semver,pattern=v{{version}}
-            # Tag with SHA for commits
-            type=sha,prefix={{branch}}-
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
