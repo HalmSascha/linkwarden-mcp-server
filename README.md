@@ -13,15 +13,60 @@ A Model Context Protocol (MCP) server that provides AI assistants with programma
 - **Read-Only Mode**: Optional safety mode for production environments
 - **Flexible Configuration**: Support for command-line flags, environment variables, and config files
 
+## Demo
+
+### Claude Code
+
+#### Available Tools
+
+![tools-in-claude-code](assets/tools_in_claude_code.png)
+
+#### Few Example Usage
+
+Save link:
+
+![save-link-in-claude-code](assets/save_link_in_claude_code.png)
+
+Search Link:
+![search-link-in-claude-code](assets/search_link_in_claude_code.png)
+
 ## Installation
 
 ### Prerequisites
 
-- Go 1.23 or later
 - Access to a Linkwarden instance (self-hosted or cloud)
 - Linkwarden API token with appropriate permissions
 
-### Build from Source
+### A. Using Docker (Recommended)
+
+The easiest way to use linkwarden-mcp-server is via Docker. Pre-built images are available on GitHub Container Registry.
+
+#### Pull the latest image
+
+```bash
+docker pull ghcr.io/irfansofyana/linkwarden-mcp-server:latest
+```
+
+#### Pull a specific version
+
+```bash
+# Pull a specific version (e.g., v1.0.0)
+docker pull ghcr.io/irfansofyana/linkwarden-mcp-server:1.0.0
+
+# Or with 'v' prefix
+docker pull ghcr.io/irfansofyana/linkwarden-mcp-server:v1.0.0
+```
+
+**Available tags:**
+- `latest` - Latest stable release from main branch
+- `v{major}.{minor}.{patch}` - Specific version (e.g., `v1.0.0`)
+- `{major}.{minor}.{patch}` - Specific version without 'v' prefix (e.g., `1.0.0`)
+- `{major}.{minor}` - Latest patch for minor version (e.g., `1.0`)
+- `{major}` - Latest minor and patch for major version (e.g., `1`)
+
+### B. Build from Source
+
+If you prefer to build from source:
 
 ```bash
 git clone https://github.com/irfansofyana/linkwarden-mcp-server.git
@@ -29,10 +74,14 @@ cd linkwarden-mcp-server
 make build
 ```
 
-### Using Go
+**Prerequisites for building:**
+- Go 1.23 or later
+- Make
+
+### C. Using Go Install
 
 ```bash
-go install github.com/irfansofyana/linkwarden-mcp-server@latest
+go install github.com/irfansofyana/linkwarden-mcp-server/cmd/linkwarden-mcp-server@latest
 ```
 
 ## Configuration
@@ -175,9 +224,114 @@ export TOOLSETS=search,collection,link,tags
   --toolsets search,link
 ```
 
-## MCP Client Integration
+## Usage with MCP Clients
 
-### Claude Desktop
+The linkwarden-mcp-server uses stdio transport and can be integrated with any MCP-compatible client.
+
+### Using Docker with Claude Desktop
+
+Add to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "linkwarden": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "--init",
+        "-e", "LINKWARDEN_BASE_URL=https://your-linkwarden-instance.com",
+        "-e", "LINKWARDEN_TOKEN=your-api-token-here",
+        "ghcr.io/irfansofyana/linkwarden-mcp-server:latest"
+      ]
+    }
+  }
+}
+```
+
+**With optional configuration:**
+
+```json
+{
+  "mcpServers": {
+    "linkwarden": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "--init",
+        "-e", "LINKWARDEN_BASE_URL=https://your-linkwarden-instance.com",
+        "-e", "LINKWARDEN_TOKEN=your-api-token-here",
+        "-e", "TOOLSETS=search,collection,link",
+        "-e", "READ_ONLY=true",
+        "ghcr.io/irfansofyana/linkwarden-mcp-server:latest"
+      ]
+    }
+  }
+}
+```
+
+### Using Docker with Claude Code
+
+Add to your MCP settings in Claude Code:
+
+```json
+{
+  "mcpServers": {
+    "linkwarden": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "--init",
+        "-e", "LINKWARDEN_BASE_URL=https://your-linkwarden-instance.com",
+        "-e", "LINKWARDEN_TOKEN=your-api-token-here",
+        "ghcr.io/irfansofyana/linkwarden-mcp-server:latest"
+      ]
+    }
+  }
+}
+```
+
+### Using Docker with Other MCP Clients
+
+For any MCP client that supports stdio transport:
+
+```bash
+docker run --rm -i \
+  -e LINKWARDEN_BASE_URL="https://your-linkwarden-instance.com" \
+  -e LINKWARDEN_TOKEN="your-api-token-here" \
+  ghcr.io/irfansofyana/linkwarden-mcp-server:latest
+```
+
+**Docker run options explained:**
+- `--rm` - Automatically remove container when it exits
+- `-i` - Keep STDIN open for stdio communication
+- `--init` - Use an init process to handle signals properly
+- `-e` - Set environment variables for configuration
+
+### Testing the Docker Image
+
+To verify the Docker image works correctly:
+
+```bash
+# Test with --version (not yet implemented, will connect to stdio)
+echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"1.0","clientInfo":{"name":"test","version":"1.0"}}}' | \
+docker run --rm -i \
+  -e LINKWARDEN_BASE_URL="https://your-linkwarden-instance.com" \
+  -e LINKWARDEN_TOKEN="your-api-token-here" \
+  ghcr.io/irfansofyana/linkwarden-mcp-server:latest
+```
+
+## Binary-based Integration
+
+If you've built from source or installed via Go, you can also use the binary directly.
+
+### Claude Desktop (Binary)
 
 Add to your `claude_desktop_config.json`:
 
@@ -196,7 +350,7 @@ Add to your `claude_desktop_config.json`:
 }
 ```
 
-### Other MCP Clients
+### Other MCP Clients (Binary)
 
 The server uses stdio transport, so it can be integrated with any MCP client that supports stdio communication.
 

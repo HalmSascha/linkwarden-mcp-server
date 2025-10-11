@@ -4,3 +4,11 @@ bin/
 # Log files
 logs
 lwmcp
+*.log
+
+# Environment files
+.env
+.env.*
+
+# macOS
+.DS_Store
