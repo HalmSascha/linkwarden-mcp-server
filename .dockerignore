@@ -1,0 +1,60 @@
+# Build artifacts
+bin/
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Logs
+logs
+lwmcp
+*.log
+
+# Environment files
+.env
+.env.*
+
+# Git
+.git/
+.gitignore
+.github/
+
+# Documentation (not needed in container)
+*.md
+!api/*.md
+docs/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+
+# License (not needed in runtime)
+LICENSE
+
+# CI/CD
+.github/
+
+# Development and testing
+examples/
+test/
+tests/
+
+# Go workspace
+go.work
+go.work.sum
+
+# Temporary files
+tmp/
+temp/
