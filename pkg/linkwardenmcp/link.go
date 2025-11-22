@@ -61,6 +61,9 @@ func GetAllLinks(
 	}
 
 	handler := func(ctx context.Context, req mcpgo.CallToolRequest) (*mcpgo.ToolResult, error) {
+		if result, err := EnforcePolicy(ctx, "link", false); result != nil {
+			return result, err
+		}
 		client, err := getClientFromContextOrDefault(ctx, client)
 		if err != nil {
 			return mcpgo.NewToolResultError(err.Error()), nil
@@ -134,6 +137,9 @@ func GetLinkById(
 	}
 
 	handler := func(ctx context.Context, req mcpgo.CallToolRequest) (*mcpgo.ToolResult, error) {
+		if result, err := EnforcePolicy(ctx, "link", false); result != nil {
+			return result, err
+		}
 		client, err := getClientFromContextOrDefault(ctx, client)
 		if err != nil {
 			return mcpgo.NewToolResultError(err.Error()), nil
@@ -207,6 +213,9 @@ func CreateLink(
 	}
 
 	handler := func(ctx context.Context, req mcpgo.CallToolRequest) (*mcpgo.ToolResult, error) {
+		if result, err := EnforcePolicy(ctx, "link", true); result != nil {
+			return result, err
+		}
 		client, err := getClientFromContextOrDefault(ctx, client)
 		if err != nil {
 			return mcpgo.NewToolResultError(err.Error()), nil
@@ -322,6 +331,9 @@ func DeleteLinkById(
 	}
 
 	handler := func(ctx context.Context, req mcpgo.CallToolRequest) (*mcpgo.ToolResult, error) {
+		if result, err := EnforcePolicy(ctx, "link", true); result != nil {
+			return result, err
+		}
 		client, err := getClientFromContextOrDefault(ctx, client)
 		if err != nil {
 			return mcpgo.NewToolResultError(err.Error()), nil
@@ -371,6 +383,9 @@ func DeleteLinks(
 	}
 
 	handler := func(ctx context.Context, req mcpgo.CallToolRequest) (*mcpgo.ToolResult, error) {
+		if result, err := EnforcePolicy(ctx, "link", true); result != nil {
+			return result, err
+		}
 		client, err := getClientFromContextOrDefault(ctx, client)
 		if err != nil {
 			return mcpgo.NewToolResultError(err.Error()), nil
@@ -431,6 +446,9 @@ func ArchiveLink(
 	}
 
 	handler := func(ctx context.Context, req mcpgo.CallToolRequest) (*mcpgo.ToolResult, error) {
+		if result, err := EnforcePolicy(ctx, "link", true); result != nil {
+			return result, err
+		}
 		client, err := getClientFromContextOrDefault(ctx, client)
 		if err != nil {
 			return mcpgo.NewToolResultError(err.Error()), nil

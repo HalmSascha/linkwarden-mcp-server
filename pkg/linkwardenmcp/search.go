@@ -37,6 +37,9 @@ func SearchLinks(
 	}
 
 	handler := func(ctx context.Context, req mcpgo.CallToolRequest) (*mcpgo.ToolResult, error) {
+		if result, err := EnforcePolicy(ctx, "search", false); result != nil {
+			return result, err
+		}
 		client, err := getClientFromContextOrDefault(ctx, client)
 		if err != nil {
 			return mcpgo.NewToolResultError(err.Error()), nil

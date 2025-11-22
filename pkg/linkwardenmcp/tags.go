@@ -16,6 +16,9 @@ func GetAllTags(
 	params := []mcpgo.ToolParameter{}
 
 	handler := func(ctx context.Context, req mcpgo.CallToolRequest) (*mcpgo.ToolResult, error) {
+		if result, err := EnforcePolicy(ctx, "tags", false); result != nil {
+			return result, err
+		}
 		client, err := getClientFromContextOrDefault(ctx, client)
 		if err != nil {
 			return mcpgo.NewToolResultError(err.Error()), nil
@@ -54,6 +57,9 @@ func DeleteTagById(
 	}
 
 	handler := func(ctx context.Context, req mcpgo.CallToolRequest) (*mcpgo.ToolResult, error) {
+		if result, err := EnforcePolicy(ctx, "tags", true); result != nil {
+			return result, err
+		}
 		client, err := getClientFromContextOrDefault(ctx, client)
 		if err != nil {
 			return mcpgo.NewToolResultError(err.Error()), nil

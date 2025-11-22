@@ -16,6 +16,9 @@ func GetAllCollections(
 	params := []mcpgo.ToolParameter{}
 
 	handler := func(ctx context.Context, req mcpgo.CallToolRequest) (*mcpgo.ToolResult, error) {
+		if result, err := EnforcePolicy(ctx, "collection", false); result != nil {
+			return result, err
+		}
 		client, err := getClientFromContextOrDefault(ctx, client)
 		if err != nil {
 			return mcpgo.NewToolResultError(err.Error()), nil
@@ -54,6 +57,9 @@ func GetCollectionById(
 	}
 
 	handler := func(ctx context.Context, req mcpgo.CallToolRequest) (*mcpgo.ToolResult, error) {
+		if result, err := EnforcePolicy(ctx, "collection", false); result != nil {
+			return result, err
+		}
 		client, err := getClientFromContextOrDefault(ctx, client)
 		if err != nil {
 			return mcpgo.NewToolResultError(err.Error()), nil
@@ -123,6 +129,9 @@ func CreateCollection(
 	}
 
 	handler := func(ctx context.Context, req mcpgo.CallToolRequest) (*mcpgo.ToolResult, error) {
+		if result, err := EnforcePolicy(ctx, "collection", true); result != nil {
+			return result, err
+		}
 		client, err := getClientFromContextOrDefault(ctx, client)
 		if err != nil {
 			return mcpgo.NewToolResultError(err.Error()), nil
@@ -186,6 +195,9 @@ func DeleteCollectionById(
 	}
 
 	handler := func(ctx context.Context, req mcpgo.CallToolRequest) (*mcpgo.ToolResult, error) {
+		if result, err := EnforcePolicy(ctx, "collection", true); result != nil {
+			return result, err
+		}
 		client, err := getClientFromContextOrDefault(ctx, client)
 		if err != nil {
 			return mcpgo.NewToolResultError(err.Error()), nil
@@ -271,6 +283,9 @@ func GetPublicCollectionsLinks(
 	}
 
 	handler := func(ctx context.Context, req mcpgo.CallToolRequest) (*mcpgo.ToolResult, error) {
+		if result, err := EnforcePolicy(ctx, "collection", false); result != nil {
+			return result, err
+		}
 		client, err := getClientFromContextOrDefault(ctx, client)
 		if err != nil {
 			return mcpgo.NewToolResultError(err.Error()), nil
@@ -342,6 +357,9 @@ func GetPublicCollectionsTags(
 	}
 
 	handler := func(ctx context.Context, req mcpgo.CallToolRequest) (*mcpgo.ToolResult, error) {
+		if result, err := EnforcePolicy(ctx, "collection", false); result != nil {
+			return result, err
+		}
 		client, err := getClientFromContextOrDefault(ctx, client)
 		if err != nil {
 			return mcpgo.NewToolResultError(err.Error()), nil
@@ -395,6 +413,9 @@ func GetPublicCollectionById(
 	}
 
 	handler := func(ctx context.Context, req mcpgo.CallToolRequest) (*mcpgo.ToolResult, error) {
+		if result, err := EnforcePolicy(ctx, "collection", false); result != nil {
+			return result, err
+		}
 		client, err := getClientFromContextOrDefault(ctx, client)
 		if err != nil {
 			return mcpgo.NewToolResultError(err.Error()), nil
