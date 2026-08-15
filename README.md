@@ -1,5 +1,7 @@
 # linkwarden-mcp-server
 
+<p align="center"><img src="assets/icon.png" width="120" alt="linkwarden-mcp-server icon" /></p>
+
 A Model Context Protocol (MCP) server that provides AI assistants with programmatic access to Linkwarden instances. Linkwarden is a self-hosted bookmark management service, and this MCP server enables AI agents to interact with Linkwarden's bookmark collections, links, and search functionality.
 
 ## Features
